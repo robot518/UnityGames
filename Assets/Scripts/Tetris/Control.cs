@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 public class Control : MonoBehaviour, IPointerDownHandler, IPointerUpHandler {
 	bool _bAuto = false;
 	float _iTime = 0;
-	Main _delt;
+    Tetris _delt;
 	int _pos; //013左右下
 	float _iLimit = -1;
 
@@ -46,7 +46,7 @@ public class Control : MonoBehaviour, IPointerDownHandler, IPointerUpHandler {
 		_iLimit = -1;
 	}
 
-	public void init(Main delt, int pos){
+	public void init(Tetris delt, int pos){
 		_delt = delt;
 		_pos = pos;
 	}

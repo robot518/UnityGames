@@ -6,5 +6,15 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scene/Main.unity
+    path: Assets/Scenes/Tetris.unity
     guid: 5a4b61665ddb34201ad3c457d7372291
+  - enabled: 1
+    path: Assets/Scenes/Minesweeper.unity
+    guid: 487a6f0236849406cb2210343e46b276
+  - enabled: 1
+    path: Assets/Scenes/Lobby.unity
+    guid: e8f6523822e87484abc240495d277a7e
+  - enabled: 1
+    path: Assets/Scenes/2048.unity
+    guid: 28120d99e8c59425ea44eb0d4d6b76dd
+  m_configObjects: {}

@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
-public class Main : MonoBehaviour {
+public class Tetris : MonoBehaviour {
 	const int DY = 40;
 	const int DX = 40;
 	const int DESY = -360;
@@ -37,16 +38,6 @@ public class Main : MonoBehaviour {
 	bool _bStop;
 	Transform _iSPItem;
 	AudioMgr adMgr;
-
-//	enum blockType{
-//		cy1_3 = 0,
-//		cy1_3_l = 1,
-//		cy1_3_r = 2,
-//		cy2_2 = 3,
-//		cy2_2_l = 4,
-//		cy2_2_r = 5,
-//		cy0_4 = 6,
-//	}
 
 	// Use this for initialization
 	void Start () {
@@ -90,7 +81,12 @@ public class Main : MonoBehaviour {
 	}
 
 	void initEvent(){
-		var goDown = transform.Find ("goDown");
+        transform.Find("goLeft/back").GetComponent<Button>().onClick.AddListener(delegate
+        {
+            SceneManager.LoadScene("Lobby");
+        });
+
+        var goDown = transform.Find ("goDown");
 		UnityAction[] tFunc = {onLeft, onRight, onUp, onDown, onStart, onStop, onConvert};
 		for (var i = 0; i < tFunc.Length; i++){
 			var btn = goDown.GetChild (i);
