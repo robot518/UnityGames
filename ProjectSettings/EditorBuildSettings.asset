@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/2048.unity
     guid: 28120d99e8c59425ea44eb0d4d6b76dd
+  - enabled: 1
+    path: Assets/Scenes/D3Minesweeper.unity
+    guid: 0052f0771e758451cbf9dfb5f03bf564
   m_configObjects: {}
