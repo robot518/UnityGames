@@ -25,13 +25,12 @@ public class Lobby : MonoBehaviour
     void initEvent()
     {
         var btns = transform.Find("btns");
-        string[] tMenuItem = { "Minesweeper", "2048", "Tetris", "Sudoku", "Marble"};
+        string[] tMenuItem = { "Minesweeper", "2048", "Tetris", "D3Minesweeper", "Marble"};
         for (int i = 0, iL = btns.childCount; i < iL; i++)
         {
             var item = btns.GetChild(i).GetComponent<Button>();
             var idx = i;
             item.onClick.AddListener(delegate {
-                if (idx > 2) return;
                 SceneManager.LoadScene(tMenuItem[idx]);
             });
         }

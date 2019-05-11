@@ -191,7 +191,7 @@ GameObject:
   - component: {fileID: 126834409}
   - component: {fileID: 126834408}
   m_Layer: 5
-  m_Name: Sudoku
+  m_Name: 3DMinesweeper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1328,7 +1328,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u6570\u72EC"
+  m_Text: "3D\u626B\u96F7"
 --- !u!222 &1779225655
 CanvasRenderer:
   m_ObjectHideFlags: 0
