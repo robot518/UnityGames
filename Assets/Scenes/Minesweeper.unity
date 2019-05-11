@@ -2054,6 +2054,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc7814f56c9a741d0bee5600d3d9bdcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tilemap: {fileID: 187562360}
+  tiles:
+  - {fileID: 11400000, guid: 4f32dc70577974142bb49c9fa4ffdb4d, type: 2}
+  - {fileID: 11400000, guid: bfbd5bb82fda14750842c6c24bf43f02, type: 2}
+  - {fileID: 11400000, guid: daeeae7ec58494d8b9dfe4794ce00a19, type: 2}
+  - {fileID: 11400000, guid: 609b3532899b3469f955514896f75bb7, type: 2}
+  - {fileID: 11400000, guid: 9894808afa00244bb8a05737871230af, type: 2}
+  - {fileID: 11400000, guid: 1528ebb8dfcb14263ba536cd4b09c3be, type: 2}
+  - {fileID: 11400000, guid: ed09d4917d4164a558e23f057564f880, type: 2}
+  - {fileID: 11400000, guid: a21348314c8bc4299af4609b166e48b6, type: 2}
+  - {fileID: 11400000, guid: db91eed70220a4eb08574f6dcf279b7c, type: 2}
+  - {fileID: 11400000, guid: 0c73957d333884a06818b3ab6d149fa6, type: 2}
+  - {fileID: 11400000, guid: c853e345578ca4b7298fe1fb17437cbf, type: 2}
 --- !u!225 &288858805
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -8704,7 +8717,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2003180282
 RectTransform:
   m_ObjectHideFlags: 0

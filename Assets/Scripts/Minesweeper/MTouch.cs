@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 
 public class MTouch : MonoBehaviour, IPointerClickHandler
 {
+    Minesweeper _delt;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,7 +27,13 @@ public class MTouch : MonoBehaviour, IPointerClickHandler
         {
             var col = Mathf.Floor((pos.x - 90) / iLen);
             var row = 8 - Mathf.Floor((pos.y - 380) / iLen);
-            Debug.Log(col + "," + row);
+            var idx = (int)(9 * row + col);
+            _delt.onClick(idx);
         }
+    }
+
+    public void init(Minesweeper delt)
+    {
+        _delt = delt;
     }
 }
