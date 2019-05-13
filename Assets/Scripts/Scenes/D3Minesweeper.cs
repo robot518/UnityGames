@@ -5,15 +5,17 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class D3Minesweeper : MonoBehaviour, IPointerClickHandler
+public class D3Minesweeper : MonoBehaviour
 {
     const int COUNT = 5, TOTAL = COUNT* COUNT* COUNT, MINES = 10, AREA = COUNT*COUNT;
     int[] _tBtns = new int[TOTAL];
     int[] _tNum = new int[TOTAL];
     bool _bGameOver = false;
     public Transform cube;
+    public Transform cam;
     public Material[] materials;
     AudioMgr adMgr;
+    ArrayList group = new ArrayList();
 
     // Start is called before the first frame update
     void Start()
@@ -27,7 +29,18 @@ public class D3Minesweeper : MonoBehaviour, IPointerClickHandler
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetMouseButton(0))
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hitInfo;
+
+            if (Physics.Raycast(ray, out hitInfo))
+            {
+                Transform trans = hitInfo.collider.transform;
+                var idx = group.IndexOf(trans);
+                onClick(idx);
+            }
+        }
     }
 
     void initParas()
@@ -42,6 +55,11 @@ public class D3Minesweeper : MonoBehaviour, IPointerClickHandler
         });
         var btnStart = transform.Find("start").gameObject.GetComponent<Button>();
         btnStart.onClick.AddListener(onStart);
+        transform.Find("reset").GetComponent<Button>().onClick.AddListener(delegate
+        {
+            cam.localPosition = new Vector3(0, 0, -10);
+            cam.localRotation = Quaternion.identity;
+        });
     }
     void initGrids()
     {
@@ -55,6 +73,7 @@ public class D3Minesweeper : MonoBehaviour, IPointerClickHandler
             var item = i == 0 ? cube : Instantiate(cube);
             item.parent = cube.parent;
             item.localPosition = new Vector3(x - offset, offset - y, offset-z);
+            group.Add(item);
         }
     }
     void initMines()
@@ -119,14 +138,20 @@ public class D3Minesweeper : MonoBehaviour, IPointerClickHandler
                 var left = k % AREA;
                 var col = left % COUNT;
                 var row = (int)Mathf.Floor(left / COUNT);
-                for (var x = row - 1; x < row + 2; x++) for (var y = col - 1; y < col + 2; y++) for (var z = depth - 1; z < depth + 2; z++)
+                for (var x = row - 1; x < row + 2; x++)
+                {
+                    for (var y = col - 1; y < col + 2; y++)
+                    {
+                        for (var z = depth - 1; z < depth + 2; z++)
                         {
                             if (x == 0 || y == 0 || z == 0 || x == COUNT - 1 || y == COUNT - 1 || z == COUNT - 1)
                             {
                                 var idx = z * AREA + x * COUNT + y;
-                                if (_tBtns[idx] == 1) showGrids(idx);
+                                if (idx >= 0 && idx < TOTAL && _tBtns[idx] == 1) showGrids(idx);
                             }
                         };
+                    }
+                }
             }
         }
     }
@@ -180,30 +205,6 @@ public class D3Minesweeper : MonoBehaviour, IPointerClickHandler
                     //showResult();
                 }
                 else adMgr.PlaySound("check");
-            }
-        }
-    }
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        Debug.Log(eventData);
-        var startPoint = Camera.main.transform.position;
-        //从摄像头发射一条射线，到鼠标点击的位置
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        //射线碰撞到的地方
-        RaycastHit hit;
-        //这里不懂的可以查看API。参数依次是表示射线，射线碰撞的位置，射线的距离,检测的层。
-        if (Physics.Raycast(ray, out hit, 100, 1 << 8))
-        {
-            var endPoint = hit.point;
-            //如果碰撞的是地面
-            if (hit.collider.gameObject.name == "Terrain")
-            {
-                // hit.point 就是表示点击的碰撞的哪个位置;
-                Debug.Log("我碰撞到了地面");
-            }
-            else
-            {
-                Debug.Log("我碰撞到了其他物体");
             }
         }
     }
