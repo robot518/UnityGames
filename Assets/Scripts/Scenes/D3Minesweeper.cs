@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class D3Minesweeper : MonoBehaviour
 {
-    const int COUNT = 5, TOTAL = COUNT* COUNT* COUNT, MINES = 10, AREA = COUNT*COUNT;
+    const int COUNT = 5, TOTAL = COUNT* COUNT* COUNT, MINES = 18, AREA = COUNT*COUNT;
     int[] _tBtns = new int[TOTAL];
     int[] _tNum = new int[TOTAL];
     bool _bGameOver = false;
@@ -49,13 +49,13 @@ public class D3Minesweeper : MonoBehaviour
     }
     void initEvent()
     {
-        transform.Find("back").GetComponent<Button>().onClick.AddListener(delegate
+        transform.Find("top/back").GetComponent<Button>().onClick.AddListener(delegate
         {
             SceneManager.LoadScene("Lobby");
         });
-        var btnStart = transform.Find("start").gameObject.GetComponent<Button>();
+        var btnStart = transform.Find("down/start").gameObject.GetComponent<Button>();
         btnStart.onClick.AddListener(onStart);
-        transform.Find("reset").GetComponent<Button>().onClick.AddListener(delegate
+        transform.Find("down/reset").GetComponent<Button>().onClick.AddListener(delegate
         {
             cam.localPosition = new Vector3(0, 0, -10);
             cam.localRotation = Quaternion.identity;
