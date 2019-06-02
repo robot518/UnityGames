@@ -6,7 +6,7 @@ using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 public class Smile2048 : MonoBehaviour {
-    const int ROW = 4, TOTAL = 16;
+    const int ROW = 4, TOTAL = 16, LENGTH = 130, INTER = 30;
     bool _bGameOver = false;
     public string[] colors = { "eee4da", "ede0c8", "f2b179", "f59563", "f67c5f", "f65e3b", "edcf72", "edcc61", "99cc00", "33b5e5", "0099cc" };
     public int[] sizes = { };
@@ -57,12 +57,32 @@ public class Smile2048 : MonoBehaviour {
         });
         transform.Find("btns/start").gameObject.GetComponent<Button>().onClick.AddListener(onClickStart);
 		var goControl = transform.Find ("control");
-		for (int i = 0; i < 4; i++) {
-			var idxTemp = i;
-			var btn = goControl.GetChild (i).gameObject.GetComponent<Button> ();
+		for (int k = 0; k < 4; k++) {
+			var idx = k;
+			var btn = goControl.GetChild (k).gameObject.GetComponent<Button> ();
 			btn.onClick.AddListener (delegate() {
-				
-			});
+				if (idx == 1)
+                {
+                    for (int i = 0; i < ROW; i++)
+                    {
+                        int cnt = 0;
+                        for (int j = 0; j < ROW; j++)
+                        {
+                            if (nums[j][i] != 0 && j != cnt)
+                            {
+                                nums[cnt][i] = nums[j][i];
+                                nums[j][i] = 0;
+                                var tmp = group[j][i];
+                                group[j][i] = group[cnt][i];
+                                group[cnt][i] = tmp;
+                                group[cnt][i].transform.localPosition = tmp.transform.localPosition;
+                                tmp.playMoveY(tmp.transform.localPosition.y);
+                                cnt++;
+                            }
+                        }
+                    }
+                }
+            });
 		}
 	}
 
@@ -78,6 +98,7 @@ public class Smile2048 : MonoBehaviour {
             for (int j = 0; j < ROW; j++)
             {
                 nums[i][j] = 0;
+                group[i][j].gameObject.SetActive(false);
             }
         }
         var rand1 = Random.Range(0, TOTAL);
@@ -89,9 +110,9 @@ public class Smile2048 : MonoBehaviour {
         var c2 = rand2 % ROW;
         var r2 = (int)Mathf.Floor(rand2 / ROW);
         nums[r2][c2] = 2;
-        group[r1][c1].play();
+        group[r1][c1].playScale();
         group[r1][c1].showLab(2);
-        group[r2][c2].play();
+        group[r2][c2].playScale();
         group[r2][c2].showLab(2);
     }
 

@@ -4,8 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Item : MonoBehaviour {
-    bool _bPlay = false;
-	Text lab;
+    bool _bPlayScale = false;
+    bool _bPlayMoveY = false;
+    float _py, _px;
+    Text lab;
     Image img;
     Smile2048 _delt;
 
@@ -20,11 +22,25 @@ public class Item : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (_bPlay)
+        if (_bPlayScale)
         {
-            transform.localScale += Vector3.one / 20;
-            if (transform.localScale == Vector3.one)
-                _bPlay = false;
+            var dt = Time.deltaTime;
+            transform.localScale += new Vector3(10 * dt, 10 * dt, 10 * dt);
+            if (transform.localScale.x >= 1)
+            {
+                transform.localScale = Vector3.one;
+                _bPlayScale = false;
+            }
+        } else if (_bPlayMoveY)
+        {
+            var dt = Time.deltaTime;
+            transform.Translate(0, 400 * dt, 0);
+            var rect = GetComponent<RectTransform>();
+            if (rect.anchoredPosition.y >= _py)
+            {
+                rect.anchoredPosition = new Vector2(rect.anchoredPosition.x, _py);
+                _bPlayMoveY = false;
+            }
         }
     }
 
@@ -46,10 +62,16 @@ public class Item : MonoBehaviour {
         img.color = FuncMgr.getColorFromHex(_delt.colors[idx]);
     }
 
-    public void play()
+    public void playScale()
     {
-        //_bPlay = true;
+        _bPlayScale = true;
         transform.gameObject.SetActive(true);
-        //transform.localScale = Vector3.one / 10;
+        transform.localScale = Vector3.one / 10;
+    }
+
+    public void playMoveY(float i)
+    {
+        _py = i;
+        _bPlayMoveY = true;
     }
 }
