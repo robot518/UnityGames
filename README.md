@@ -4,4 +4,4 @@ tetris
 ![Image](https://raw.githubusercontent.com/aschen518/tetris/master/imgs/jt0.jpg) 
 ![Image](https://raw.githubusercontent.com/aschen518/tetris/master/imgs/jt2.jpg) 
 ![Image](https://raw.githubusercontent.com/aschen518/tetris/master/imgs/jt1.png) 
-![Image](https://raw.githubusercontent.com/aschen518/tetris/master/imgs/2048.png) 
+![Image](https://raw.githubusercontent.com/aschen518/tetris/master/imgs/2048.jpg) 
