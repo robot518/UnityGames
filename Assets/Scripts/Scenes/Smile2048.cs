@@ -6,7 +6,8 @@ using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 public class Smile2048 : MonoBehaviour {
-    const int ROW = 4, TOTAL = 16, LENGTH = 130, INTER = 30;
+    const int ROW = 4, TOTAL = 16, LENGTH = 130, INTER = 30, MOVE = 160;
+    int _cnt = 0;
     bool _bGameOver = false;
     public string[] colors = { "eee4da", "ede0c8", "f2b179", "f59563", "f67c5f", "f65e3b", "edcf72", "edcc61", "99cc00", "33b5e5", "0099cc" };
     public int[] sizes = { };
@@ -61,33 +62,40 @@ public class Smile2048 : MonoBehaviour {
 			var idx = k;
 			var btn = goControl.GetChild (k).gameObject.GetComponent<Button> ();
 			btn.onClick.AddListener (delegate() {
-				if (idx == 1)
+                if (_bGameOver) return;
+                switch (idx)
                 {
-                    for (int i = 0; i < ROW; i++)
-                    {
-                        int cnt = 0;
-                        for (int j = 0; j < ROW; j++)
-                        {
-                            if (nums[j][i] != 0 && j != cnt)
-                            {
-                                nums[cnt][i] = nums[j][i];
-                                nums[j][i] = 0;
-                                var tmp = group[j][i];
-                                group[j][i] = group[cnt][i];
-                                group[cnt][i] = tmp;
-                                group[cnt][i].transform.localPosition = tmp.transform.localPosition;
-                                tmp.playMoveY(tmp.transform.localPosition.y);
-                                cnt++;
-                            }
-                        }
-                    }
+                    case 0: 
+                        onLeft();
+                        break;
+                    case 1: 
+                        onUp();
+                        break;
+                    case 2: 
+                        onDown();
+                        break;
+                    case 3: 
+                        onRight();
+                        break;
                 }
             });
 		}
 	}
 
-	void onClickStart(){
+    void playMove(Item itemMove, Item itemHide, int mx, int my, bool bMerge, Item itemMerge)
+    {
+        var pos = itemMove.GetComponent<RectTransform>().anchoredPosition;
+        var x = pos.x;
+        var y = pos.y;
+        itemHide.gameObject.SetActive(false);
+        itemMove.transform.localPosition = itemHide.transform.localPosition;
+        itemMove.playMove(x, y, mx, my, bMerge, itemMerge);
+    }
+
+    void onClickStart(){
+        _cnt = 0;
         _bGameOver = false;
+        goTips.gameObject.SetActive(false);
         initNumShow();
     }
 
@@ -101,8 +109,10 @@ public class Smile2048 : MonoBehaviour {
                 group[i][j].gameObject.SetActive(false);
             }
         }
-        var rand1 = Random.Range(0, TOTAL);
-        var rand2 = Random.Range(1, TOTAL-1);
+        //var rand1 = Random.Range(0, TOTAL);
+        //var rand2 = Random.Range(1, TOTAL-1);
+        var rand1 = 0;
+        var rand2 = 3;
         if (rand1 == rand2) rand2--;
         var c1 = rand1 % ROW;
         var r1 = (int)Mathf.Floor(rand1 / ROW);
@@ -110,29 +120,102 @@ public class Smile2048 : MonoBehaviour {
         var c2 = rand2 % ROW;
         var r2 = (int)Mathf.Floor(rand2 / ROW);
         nums[r2][c2] = 2;
-        group[r1][c1].playScale();
         group[r1][c1].showLab(2);
-        group[r2][c2].playScale();
+        group[r1][c1].playScale();
         group[r2][c2].showLab(2);
+        group[r2][c2].playScale();
+        _cnt += 2;
     }
 
     void onAddItem(){
+        var rand = Random.Range(0, TOTAL-_cnt);
+        rand = 2;
+        for (var i = 0; i < ROW; i++)
+        {
+            for (var j = 0; j < ROW; j++)
+            {
+                if (nums[i][j] == 0 && rand-- == 0)
+                {
+                    nums[i][j] = 2;
+                    group[i][j].showLab(2);
+                    group[i][j].playScale();
+                    if (!_bGameOver) checkLose();
+                    return;
+                }
+            }
+        }
+    }
 
-	}
-
-	void showTipsSP(string str){
+    void showTipsSP(string str){
 		goTips.GetChild (0).GetComponent<Text> ().text = str;
 		goTips.gameObject.SetActive (true);
 	}
 
-    bool checkWin()
+    bool checkUp()
     {
-        return true;
+        for (var i = 1; i < ROW; i++)
+        {
+            for (var j = 0; j < ROW; j++)
+            {
+                if (nums[i][j] != 0)
+                {
+                    if (nums[i - 1][j] == 0 || nums[i - 1][j] == nums[i][j]) return true;
+                }
+            }
+        }
+        return false;
+    }
+    bool checkDown()
+    {
+        for (var i = 0; i < ROW-1; i++)
+        {
+            for (var j = 0; j < ROW; j++)
+            {
+                if (nums[i][j] != 0)
+                {
+                    if (nums[i + 1][j] == 0 || nums[i + 1][j] == nums[i][j]) return true;
+                }
+            }
+        }
+        return false;
+    }
+    bool checkLeft()
+    {
+        for (var i = 0; i < ROW; i++)
+        {
+            for (var j = 1; j < ROW; j++)
+            {
+                if (nums[i][j] != 0)
+                {
+                    if (nums[i][j-1] == 0 || nums[i][j-1] == nums[i][j]) return true;
+                }
+            }
+        }
+        return false;
+    }
+    bool checkRight()
+    {
+        for (var i = 0; i < ROW; i++)
+        {
+            for (var j = 0; j < ROW-1; j++)
+            {
+                if (nums[i][j] != 0)
+                {
+                    if (nums[i][j + 1] == 0 || nums[i][j + 1] == nums[i][j]) return true;
+                }
+            }
+        }
+        return false;
     }
 
-    bool checkLose()
+    void checkLose()
     {
-        return false;
+        if (_cnt == TOTAL && !checkRight() && !checkLeft() && !checkUp() && !checkDown())
+        {
+            adMgr.PlaySound("lose");
+            showTipsSP("Lose");
+            _bGameOver = true;
+        }
     }
 
     public int getIdx(int iNum)
@@ -152,5 +235,243 @@ public class Smile2048 : MonoBehaviour {
             case 2048: return 10;
         }
         return 0;
+    }
+
+    void onLeft()
+    {
+        if (checkLeft())
+        {
+            for (int i = 0; i < ROW; i++)
+            {
+                int cnt = 0;
+                bool bMerge = false;
+                for (int j = 0; j < ROW; j++)
+                {
+                    int num = nums[i][j];
+                    if (num != 0)
+                    {
+                        if (!bMerge && cnt > 0)
+                        {
+                            for (int a = j - 1; a >= 0; a--)
+                            {
+                                if (nums[i][a] != 0)
+                                {
+                                    if (nums[i][a] == num)
+                                    {
+                                        nums[i][a] = num * 2;
+                                        nums[i][j] = 0;
+                                        group[i][cnt].showLab(num);
+                                        if (j == cnt)
+                                        {
+                                            group[i][a].showLab(num * 2);
+                                            group[i][j].gameObject.SetActive(false);
+                                        }
+                                        else
+                                            playMove(group[i][cnt], group[i][j], -MOVE * (j - cnt) - INTER, 0, true, group[i][a]);
+                                        bMerge = true;
+                                        if (num == 1024) //win
+                                        {
+                                            adMgr.PlaySound("win");
+                                            showTipsSP("Win");
+                                            _bGameOver = true;
+                                        }
+                                        _cnt--;
+                                    }
+                                    break;
+                                }
+                            }
+                        }
+                        if (nums[i][j] != 0 && j != cnt)
+                        {
+                            nums[i][cnt] = num;
+                            nums[i][j] = 0;
+                            group[i][cnt].showLab(num);
+                            playMove(group[i][cnt], group[i][j], -MOVE * (j - cnt), 0, false, null);
+                        }
+                        cnt++;
+                    }
+                }
+            }
+            Invoke("onAddItem", 0.2f);
+        }
+    }
+
+    void onUp()
+    {
+        if (checkUp())
+        {
+            for (int i = 0; i < ROW; i++)
+            {
+                int cnt = 0;
+                bool bMerge = false;
+                for (int j = 0; j < ROW; j++)
+                {
+                    int num = nums[j][i];
+                    if (num != 0)
+                    {
+                        if (!bMerge && cnt > 0)
+                        {
+                            for (int a = j - 1; a >= 0; a--)
+                            {
+                                if (nums[a][i] != 0)
+                                {
+                                    if (nums[a][i] == num)
+                                    {
+                                        nums[a][i] = num * 2;
+                                        nums[j][i] = 0;
+                                        group[cnt][i].showLab(num);
+                                        if (j == cnt)
+                                        {
+                                            group[a][i].showLab(num * 2);
+                                            group[j][i].gameObject.SetActive(false);
+                                        }
+                                        else
+                                            playMove(group[cnt][i], group[j][i], 0, MOVE * (j - cnt) + INTER, true, group[a][i]);
+                                        bMerge = true;
+                                        if (num == 1024) //win
+                                        {
+                                            adMgr.PlaySound("win");
+                                            showTipsSP("Win");
+                                            _bGameOver = true;
+                                        }
+                                        _cnt--;
+                                    }
+                                    break;
+                                }
+                            }
+                        }
+                        if (nums[j][i] != 0 && j != cnt)
+                        {
+                            nums[cnt][i] = num;
+                            nums[j][i] = 0;
+                            group[cnt][i].showLab(num);
+                            playMove(group[cnt][i], group[j][i], 0, MOVE * (j - cnt), false, null);
+                        }
+                        cnt++;
+                    }
+                }
+            }
+            Invoke("onAddItem", 0.2f);
+        }
+    }
+
+    void onDown()
+    {
+        if (checkDown())
+        {
+            for (int i = 0; i < ROW; i++)
+            {
+                int cnt = 0;
+                bool bMerge = false;
+                for (int j = ROW-1; j >= 0; j--)
+                {
+                    int num = nums[j][i];
+                    if (num != 0)
+                    {
+                        int tmp = ROW - 1 - cnt;
+                        if (!bMerge && cnt > 0)
+                        {
+                            for (int a = j + 1; a < ROW; a++)
+                            {
+                                if (nums[a][i] != 0)
+                                {
+                                    if (nums[a][i] == num)
+                                    {
+                                        nums[a][i] = num * 2;
+                                        nums[j][i] = 0;
+                                        group[tmp][i].showLab(num);
+                                        if (j == tmp)
+                                        {
+                                            group[a][i].showLab(num * 2);
+                                            group[j][i].gameObject.SetActive(false);
+                                        }
+                                        else
+                                            playMove(group[tmp][i], group[j][i], 0, MOVE * (j - tmp) - INTER, true, group[a][i]);
+                                        bMerge = true;
+                                        if (num == 1024) //win
+                                        {
+                                            adMgr.PlaySound("win");
+                                            showTipsSP("Win");
+                                            _bGameOver = true;
+                                        }
+                                        _cnt--;
+                                    }
+                                    break;
+                                }
+                            }
+                        }
+                        if (nums[j][i] != 0 && j != tmp)
+                        {
+                            nums[tmp][i] = num;
+                            nums[j][i] = 0;
+                            group[tmp][i].showLab(num);
+                            playMove(group[tmp][i], group[j][i], 0, MOVE * (j - tmp), false, null);
+                        }
+                        cnt++;
+                    }
+                }
+            }
+            Invoke("onAddItem", 0.2f);
+        }
+    }
+
+    void onRight()
+    {
+        if (checkRight())
+        {
+            for (int i = 0; i < ROW; i++)
+            {
+                int cnt = 0;
+                bool bMerge = false;
+                for (int j = ROW-1; j >= 0; j--)
+                {
+                    int num = nums[i][j];
+                    if (num != 0)
+                    {
+                        int tmp = ROW - 1 - cnt;
+                        if (!bMerge && cnt > 0)
+                        {
+                            for (int a = j + 1; a < ROW; a++)
+                            {
+                                if (nums[i][a] != 0)
+                                {
+                                    if (nums[i][a] == num)
+                                    {
+                                        nums[i][a] = num * 2;
+                                        nums[i][j] = 0;
+                                        group[i][tmp].showLab(num);
+                                        if (j == tmp)
+                                        {
+                                            group[i][a].showLab(num * 2);
+                                            group[i][j].gameObject.SetActive(false);
+                                        }
+                                        else
+                                            playMove(group[i][tmp], group[i][j], -MOVE * (j - tmp) + INTER, 0, true, group[i][a]);
+                                        bMerge = true;
+                                        if (num == 1024) //win
+                                        {
+                                            adMgr.PlaySound("win");
+                                            showTipsSP("Win");
+                                            _bGameOver = true;
+                                        }
+                                        _cnt--;
+                                    }
+                                    break;
+                                }
+                            }
+                        }
+                        if (nums[i][j] != 0 && j != tmp)
+                        {
+                            nums[i][tmp] = num;
+                            nums[i][j] = 0;
+                            group[i][tmp].showLab(num);
+                            playMove(group[i][tmp], group[i][j], -MOVE * (j - tmp), 0, false, null);
+                        }
+                        cnt++;
+                    }
+                }
+            }
+            Invoke("onAddItem", 0.2f);
+        }
     }
 }

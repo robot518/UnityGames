@@ -4,12 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Item : MonoBehaviour {
-    bool _bPlayScale = false;
-    bool _bPlayMoveY = false;
-    float _py, _px;
+    bool _bPlayScale = false, _bPlayMove = false, _bMerge = false;
+    int _num, _my = -1, _mx;
+    float _y, _x, _t;
     Text lab;
     Image img;
     Smile2048 _delt;
+    Item mergeItem;
 
     void Awake(){
 		initParas ();
@@ -25,21 +26,27 @@ public class Item : MonoBehaviour {
         if (_bPlayScale)
         {
             var dt = Time.deltaTime;
-            transform.localScale += new Vector3(10 * dt, 10 * dt, 10 * dt);
+            transform.localScale += new Vector3(5 * dt, 5 * dt, 0);
             if (transform.localScale.x >= 1)
             {
                 transform.localScale = Vector3.one;
                 _bPlayScale = false;
             }
-        } else if (_bPlayMoveY)
+        } else if (_bPlayMove)
         {
             var dt = Time.deltaTime;
-            transform.Translate(0, 400 * dt, 0);
-            var rect = GetComponent<RectTransform>();
-            if (rect.anchoredPosition.y >= _py)
+            _t += dt;
+            transform.Translate(5*_mx*dt, 5*_my * dt, 0);
+            if (_t >= 0.2f)
             {
-                rect.anchoredPosition = new Vector2(rect.anchoredPosition.x, _py);
-                _bPlayMoveY = false;
+                GetComponent<RectTransform>().anchoredPosition = new Vector2(_x, _y);
+                _bPlayMove = false;
+                if (_bMerge)
+                {
+                    gameObject.SetActive(false);
+                    mergeItem.showLab(mergeItem.getNum() * 2);
+                    _bMerge = false;
+                }
             }
         }
     }
@@ -55,6 +62,8 @@ public class Item : MonoBehaviour {
 	}
 
 	public void showLab(int iNum){
+        _num = iNum;
+        gameObject.SetActive(true);
         var idx = _delt.getIdx(iNum);
         //lab.text = "<color=#" + _delt.numColors[idx] + ">" + iNum + " </color>";
         lab.text = "<color=#" + "000" + ">" + iNum + "</color>";
@@ -62,16 +71,26 @@ public class Item : MonoBehaviour {
         img.color = FuncMgr.getColorFromHex(_delt.colors[idx]);
     }
 
+    public int getNum()
+    {
+        return _num;
+    }
+
     public void playScale()
     {
         _bPlayScale = true;
-        transform.gameObject.SetActive(true);
         transform.localScale = Vector3.one / 10;
     }
 
-    public void playMoveY(float i)
+    public void playMove(float x, float y, int mx, int my, bool bMerge, Item item)
     {
-        _py = i;
-        _bPlayMoveY = true;
+        _y = y;
+        _x = x;
+        _my = my;
+        _mx = mx;
+        _t = 0;
+        _bPlayMove = true;
+        _bMerge = bMerge;
+        mergeItem = item;
     }
 }

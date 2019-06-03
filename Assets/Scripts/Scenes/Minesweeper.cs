@@ -21,7 +21,6 @@ public class Minesweeper : MonoBehaviour {
 	Text labLeftMine;
 	Text labType;
 	int _iMode = 0;
-	int _iMineIdx = -1;
 	int _iDiff;
 	Transform goTogs;
 	Transform goStory;
