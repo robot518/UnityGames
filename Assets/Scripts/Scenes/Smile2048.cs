@@ -81,7 +81,7 @@ public class Smile2048 : MonoBehaviour {
             });
 		}
 	}
-
+    //通过封装精简代码
     void playMove(Item itemMove, Item itemHide, int mx, int my, bool bMerge, Item itemMerge)
     {
         var pos = itemMove.GetComponent<RectTransform>().anchoredPosition;
@@ -126,7 +126,7 @@ public class Smile2048 : MonoBehaviour {
         group[r2][c2].playScale();
         _cnt += 2;
     }
-
+    //新生成方块
     void onAddItem(){
         var rand = Random.Range(0, TOTAL-_cnt);
         for (var i = 0; i < ROW; i++)
