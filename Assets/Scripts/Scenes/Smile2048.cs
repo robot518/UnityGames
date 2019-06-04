@@ -6,12 +6,11 @@ using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 public class Smile2048 : MonoBehaviour {
-    const int ROW = 4, TOTAL = 16, LENGTH = 130, INTER = 30, MOVE = 160;
+    const int ROW = 4, TOTAL = 16, INTER = 30, MOVE = 160;
     int _cnt = 0;
+    const float TIMEDELAY = 0.2f;
     bool _bGameOver = false;
     public string[] colors = { "eee4da", "ede0c8", "f2b179", "f59563", "f67c5f", "f65e3b", "edcf72", "edcc61", "99cc00", "33b5e5", "0099cc" };
-    public int[] sizes = { };
-    public string[] numColors = { "eee4da", "ede0c8", "f2b179", "f59563", "f67c5f", "f65e3b", "edcf72", "edcc61", "99cc00", "33b5e5", "0099cc" };
     Item[][] group = new Item[ROW][];
     int[][] nums = new int[ROW][];
     Transform goTips;
@@ -63,6 +62,7 @@ public class Smile2048 : MonoBehaviour {
 			var btn = goControl.GetChild (k).gameObject.GetComponent<Button> ();
 			btn.onClick.AddListener (delegate() {
                 if (_bGameOver) return;
+                adMgr.PlaySound("click");
                 switch (idx)
                 {
                     case 0: 
@@ -111,8 +111,8 @@ public class Smile2048 : MonoBehaviour {
         }
         var rand1 = Random.Range(0, TOTAL);
         var rand2 = Random.Range(1, TOTAL-1);
-        //var rand1 = 0;
-        //var rand2 = 3;
+        //rand1 = 0;
+        //rand2 = 3;
         if (rand1 == rand2) rand2--;
         var c1 = rand1 % ROW;
         var r1 = (int)Mathf.Floor(rand1 / ROW);
@@ -129,14 +129,16 @@ public class Smile2048 : MonoBehaviour {
     //新生成方块
     void onAddItem(){
         var rand = Random.Range(0, TOTAL-_cnt);
+        //rand = 12;
         for (var i = 0; i < ROW; i++)
         {
             for (var j = 0; j < ROW; j++)
             {
                 if (nums[i][j] == 0 && --rand < 0)
                 {
-                    nums[i][j] = 2;
-                    group[i][j].showLab(2);
+                    var num = Random.Range(0, 10) < 5 ? 2 : 4;
+                    nums[i][j] = num;
+                    group[i][j].showLab(num);
                     group[i][j].playScale();
                     _cnt++;
                     if (!_bGameOver) checkLose();
@@ -208,6 +210,16 @@ public class Smile2048 : MonoBehaviour {
         return false;
     }
 
+    void checkWin(int num)
+    {
+        if (num == 1024) //win
+        {
+            adMgr.PlaySound("win");
+            showTipsSP("Win");
+            _bGameOver = true;
+        }
+    }
+
     void checkLose()
     {
         if (_cnt == TOTAL && !checkRight() && !checkLeft() && !checkUp() && !checkDown())
@@ -260,21 +272,19 @@ public class Smile2048 : MonoBehaviour {
                                     {
                                         nums[i][a] = num * 2;
                                         nums[i][j] = 0;
-                                        group[i][cnt].showLab(num);
                                         if (j == cnt)
                                         {
                                             group[i][a].showLab(num * 2);
                                             group[i][j].gameObject.SetActive(false);
                                         }
                                         else
-                                            playMove(group[i][cnt], group[i][j], -MOVE * (j - cnt) - INTER, 0, true, group[i][a]);
-                                        bMerge = true;
-                                        if (num == 1024) //win
                                         {
-                                            adMgr.PlaySound("win");
-                                            showTipsSP("Win");
-                                            _bGameOver = true;
+                                            var pos = group[i][j].GetComponent<RectTransform>().anchoredPosition;
+                                            group[i][j].playMove(pos.x, pos.y, -MOVE * (j - cnt) - INTER, 0, true, group[i][a]);
                                         }
+                                        cnt--;
+                                        bMerge = true;
+                                        checkWin(num);
                                         _cnt--;
                                     }
                                     break;
@@ -292,7 +302,7 @@ public class Smile2048 : MonoBehaviour {
                     }
                 }
             }
-            Invoke("onAddItem", 0.25f);
+            Invoke("onAddItem", TIMEDELAY);
         }
     }
 
@@ -319,21 +329,19 @@ public class Smile2048 : MonoBehaviour {
                                     {
                                         nums[a][i] = num * 2;
                                         nums[j][i] = 0;
-                                        group[cnt][i].showLab(num);
                                         if (j == cnt)
                                         {
                                             group[a][i].showLab(num * 2);
                                             group[j][i].gameObject.SetActive(false);
                                         }
                                         else
-                                            playMove(group[cnt][i], group[j][i], 0, MOVE * (j - cnt) + INTER, true, group[a][i]);
-                                        bMerge = true;
-                                        if (num == 1024) //win
                                         {
-                                            adMgr.PlaySound("win");
-                                            showTipsSP("Win");
-                                            _bGameOver = true;
+                                            var pos = group[j][i].GetComponent<RectTransform>().anchoredPosition;
+                                            group[j][i].playMove(pos.x, pos.y, 0, MOVE * (j - cnt) + INTER, true, group[a][i]);
                                         }
+                                        cnt--;
+                                        bMerge = true;
+                                        checkWin(num);
                                         _cnt--;
                                     }
                                     break;
@@ -351,7 +359,7 @@ public class Smile2048 : MonoBehaviour {
                     }
                 }
             }
-            Invoke("onAddItem", 0.25f);
+            Invoke("onAddItem", TIMEDELAY);
         }
     }
 
@@ -379,21 +387,19 @@ public class Smile2048 : MonoBehaviour {
                                     {
                                         nums[a][i] = num * 2;
                                         nums[j][i] = 0;
-                                        group[tmp][i].showLab(num);
                                         if (j == tmp)
                                         {
                                             group[a][i].showLab(num * 2);
                                             group[j][i].gameObject.SetActive(false);
                                         }
                                         else
-                                            playMove(group[tmp][i], group[j][i], 0, MOVE * (j - tmp) - INTER, true, group[a][i]);
-                                        bMerge = true;
-                                        if (num == 1024) //win
                                         {
-                                            adMgr.PlaySound("win");
-                                            showTipsSP("Win");
-                                            _bGameOver = true;
+                                            var pos = group[j][i].GetComponent<RectTransform>().anchoredPosition;
+                                            group[j][i].playMove(pos.x, pos.y, 0, MOVE * (j - tmp) - INTER, true, group[a][i]);
                                         }
+                                        cnt--;
+                                        bMerge = true;
+                                        checkWin(num);
                                         _cnt--;
                                     }
                                     break;
@@ -411,7 +417,7 @@ public class Smile2048 : MonoBehaviour {
                     }
                 }
             }
-            Invoke("onAddItem", 0.25f);
+            Invoke("onAddItem", TIMEDELAY);
         }
     }
 
@@ -439,22 +445,19 @@ public class Smile2048 : MonoBehaviour {
                                     {
                                         nums[i][a] = num * 2;
                                         nums[i][j] = 0;
-                                        group[i][tmp].showLab(num);
                                         if (j == tmp)
                                         {
                                             group[i][a].showLab(num * 2);
                                             group[i][j].gameObject.SetActive(false);
                                         }
                                         else
-                                            playMove(group[i][tmp], group[i][j], -MOVE * (j - tmp) + INTER, 0, true, group[i][a]);
-                                        bMerge = true;
-                                        if (num == 1024) //win
                                         {
-                                            adMgr.PlaySound("win");
-                                            showTipsSP("Win");
-                                            _bGameOver = true;
+                                            var pos = group[i][j].GetComponent<RectTransform>().anchoredPosition;
+                                            group[i][j].playMove(pos.x, pos.y, -MOVE * (j - tmp) + INTER, 0, true, group[i][a]);
                                         }
-                                        //cnt--;
+                                        cnt--;
+                                        bMerge = true;
+                                        checkWin(num);
                                         _cnt--;
                                     }
                                     break;
@@ -472,7 +475,7 @@ public class Smile2048 : MonoBehaviour {
                     }
                 }
             }
-            Invoke("onAddItem", 0.25f);
+            Invoke("onAddItem", TIMEDELAY);
         }
     }
 }

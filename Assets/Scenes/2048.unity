@@ -2269,7 +2269,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 100
+    m_FontSize: 50
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -2280,7 +2280,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 2
+  m_Text: 1024
 --- !u!222 &873949386
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4200,19 +4200,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   colors:
-  - eee4da
-  - ede0c8
-  - f2b179
-  - f59563
-  - f67c5f
-  - f65e3b
-  - edcf72
-  - edcc61
-  - 99cc00
-  - 33b5e5
-  - 0099cc
-  sizes: 
-  numColors:
   - eee4da
   - ede0c8
   - f2b179

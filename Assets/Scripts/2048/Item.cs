@@ -5,8 +5,9 @@ using UnityEngine.UI;
 
 public class Item : MonoBehaviour {
     bool _bPlayScale = false, _bPlayMove = false, _bMerge = false;
+    const float SPEED = 4800.0f;
     int _num, _my = -1, _mx;
-    float _y, _x, _t;
+    float _y, _x, _t, _cost, _sm;
     Text lab;
     Image img;
     Smile2048 _delt;
@@ -26,7 +27,7 @@ public class Item : MonoBehaviour {
         if (_bPlayScale)
         {
             var dt = Time.deltaTime;
-            transform.localScale += new Vector3(5 * dt, 5 * dt, 0);
+            transform.localScale += new Vector3(7 * dt, 7 * dt, 0);
             if (transform.localScale.x >= 1)
             {
                 transform.localScale = Vector3.one;
@@ -36,8 +37,8 @@ public class Item : MonoBehaviour {
         {
             var dt = Time.deltaTime;
             _t += dt;
-            transform.Translate(5*_mx*dt, 5*_my * dt, 0);
-            if (_t >= 0.2f)
+            transform.Translate(_sm * _mx*dt, _sm * _my * dt, 0);
+            if (_t >= _cost)
             {
                 GetComponent<RectTransform>().anchoredPosition = new Vector2(_x, _y);
                 _bPlayMove = false;
@@ -65,9 +66,9 @@ public class Item : MonoBehaviour {
         _num = iNum;
         gameObject.SetActive(true);
         var idx = _delt.getIdx(iNum);
-        //lab.text = "<color=#" + _delt.numColors[idx] + ">" + iNum + " </color>";
-        lab.text = "<color=#" + "000" + ">" + iNum + "</color>";
-        //lab.fontSize = _delt.sizes[idx];
+        var color = iNum <= 4 ? "000" : "fff";
+        lab.text = "<color=#" + color + ">" + iNum + "</color>";
+        lab.fontSize = iNum < 1024 ? 70 : 50;
         img.color = FuncMgr.getColorFromHex(_delt.colors[idx]);
     }
 
@@ -89,6 +90,9 @@ public class Item : MonoBehaviour {
         _my = my;
         _mx = mx;
         _t = 0;
+        _cost = (_mx != 0 ? _mx : _my) / SPEED;
+        if (_cost < 0) _cost = -_cost;
+        _sm = 1 / _cost;
         _bPlayMove = true;
         _bMerge = bMerge;
         mergeItem = item;
