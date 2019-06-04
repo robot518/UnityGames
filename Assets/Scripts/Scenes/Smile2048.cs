@@ -109,10 +109,10 @@ public class Smile2048 : MonoBehaviour {
                 group[i][j].gameObject.SetActive(false);
             }
         }
-        //var rand1 = Random.Range(0, TOTAL);
-        //var rand2 = Random.Range(1, TOTAL-1);
-        var rand1 = 0;
-        var rand2 = 3;
+        var rand1 = Random.Range(0, TOTAL);
+        var rand2 = Random.Range(1, TOTAL-1);
+        //var rand1 = 0;
+        //var rand2 = 3;
         if (rand1 == rand2) rand2--;
         var c1 = rand1 % ROW;
         var r1 = (int)Mathf.Floor(rand1 / ROW);
@@ -129,16 +129,16 @@ public class Smile2048 : MonoBehaviour {
 
     void onAddItem(){
         var rand = Random.Range(0, TOTAL-_cnt);
-        rand = 2;
         for (var i = 0; i < ROW; i++)
         {
             for (var j = 0; j < ROW; j++)
             {
-                if (nums[i][j] == 0 && rand-- == 0)
+                if (nums[i][j] == 0 && --rand < 0)
                 {
                     nums[i][j] = 2;
                     group[i][j].showLab(2);
                     group[i][j].playScale();
+                    _cnt++;
                     if (!_bGameOver) checkLose();
                     return;
                 }
@@ -292,7 +292,7 @@ public class Smile2048 : MonoBehaviour {
                     }
                 }
             }
-            Invoke("onAddItem", 0.2f);
+            Invoke("onAddItem", 0.25f);
         }
     }
 
@@ -351,7 +351,7 @@ public class Smile2048 : MonoBehaviour {
                     }
                 }
             }
-            Invoke("onAddItem", 0.2f);
+            Invoke("onAddItem", 0.25f);
         }
     }
 
@@ -411,7 +411,7 @@ public class Smile2048 : MonoBehaviour {
                     }
                 }
             }
-            Invoke("onAddItem", 0.2f);
+            Invoke("onAddItem", 0.25f);
         }
     }
 
@@ -454,6 +454,7 @@ public class Smile2048 : MonoBehaviour {
                                             showTipsSP("Win");
                                             _bGameOver = true;
                                         }
+                                        //cnt--;
                                         _cnt--;
                                     }
                                     break;
@@ -471,7 +472,7 @@ public class Smile2048 : MonoBehaviour {
                     }
                 }
             }
-            Invoke("onAddItem", 0.2f);
+            Invoke("onAddItem", 0.25f);
         }
     }
 }
