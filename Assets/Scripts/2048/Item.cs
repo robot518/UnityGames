@@ -37,7 +37,6 @@ public class Item : MonoBehaviour {
         {
             var dt = Time.deltaTime;
             _t += dt;
-            transform.Translate(_sm * _mx*dt, _sm * _my * dt, 0);
             if (_t >= _cost)
             {
                 GetComponent<RectTransform>().anchoredPosition = new Vector2(_x, _y);
@@ -48,6 +47,11 @@ public class Item : MonoBehaviour {
                     mergeItem.showLab(mergeItem.getNum() * 2);
                     _bMerge = false;
                 }
+            }
+            else
+            {
+                //transform.Translate(_sm * _mx * dt, _sm * _my * dt, 0);
+                GetComponent<RectTransform>().anchoredPosition += new Vector2(_sm * _mx * dt, _sm * _my * dt);
             }
         }
     }

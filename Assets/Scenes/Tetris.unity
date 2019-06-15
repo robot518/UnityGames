@@ -9620,7 +9620,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f0f141b2027f4c1f913bee8f4e64bf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  music: {fileID: 0}
   sound: {fileID: 1331904479}
 --- !u!1 &830879485
 GameObject:
@@ -13905,7 +13904,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u4E0A"
+  m_Text: "\u964D"
 --- !u!222 &1203223038
 CanvasRenderer:
   m_ObjectHideFlags: 0

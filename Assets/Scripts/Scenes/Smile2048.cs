@@ -111,7 +111,7 @@ public class Smile2048 : MonoBehaviour {
         }
         var rand1 = Random.Range(0, TOTAL);
         var rand2 = Random.Range(1, TOTAL-1);
-        //rand1 = 0;
+        //rand1 = 2;
         //rand2 = 3;
         if (rand1 == rand2) rand2--;
         var c1 = rand1 % ROW;

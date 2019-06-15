@@ -23,18 +23,11 @@ public class Minesweeper : MonoBehaviour {
 	int _iMode = 0;
 	int _iDiff;
 	Transform goTogs;
-	Transform goStory;
-	Transform goStoryWin;
 	Transform goTips;
 	Transform goStat;
     public Transform tilemap;
-	string _sStory = "";
-	//SPMine spMine;
-	string _sStoryLab = "zhichulian";
 	const int DX = 70;
 	const int DY = 70;
-	float px;
-	float py;
 	IOMgr ioMgr;
     public TileBase[] tiles;
     Tilemap _tileMap;
@@ -63,11 +56,7 @@ public class Minesweeper : MonoBehaviour {
 		adMgr = AudioMgr.getInstance ();
 		textTime = transform.Find ("goTop").GetChild (1).GetChild (0).GetComponent<Text> ();
 		labLeftMine = transform.Find ("goTop").GetChild (0).GetChild (0).GetComponent<Text> ();
-		//initTGrid ();
-		//spMine = new SPMine (_iTotal, _iRow);
 		goTogs = transform.Find ("goTogs");
-		goStory = transform.Find ("goStory");
-		goStoryWin = transform.Find ("goStoryWin");
 		goTips = transform.Find ("goTips");
 		goStat = transform.Find ("goStat");
 		labType = transform.Find("goBtns").GetChild(1).GetChild (0).GetComponent<Text> ();
@@ -89,8 +78,6 @@ public class Minesweeper : MonoBehaviour {
 		btnMode.onClick.AddListener (onClickDiffMode);
 		var btnType = transform.Find ("goBtns/btnType").gameObject.GetComponent<Button> ();
 		btnType.onClick.AddListener (onClickType);
-		var btnStory = transform.Find ("goBtns/btnStory").gameObject.GetComponent<Button> ();
-		btnStory.onClick.AddListener (onClickStory);
 		var stat = transform.Find ("goBtns/btnStat").gameObject.GetComponent<Button> ();
 		stat.onClick.AddListener (delegate {
 			goStat.gameObject.SetActive(true);
@@ -118,8 +105,6 @@ public class Minesweeper : MonoBehaviour {
 
 	void initShow(){
 		showTogs (false);
-		showStory(false);
-		hideStoryWin ();
 		goTips.gameObject.SetActive(false);
 		Invoke("onClickStart", 0.5f);
 	}
@@ -128,126 +113,9 @@ public class Minesweeper : MonoBehaviour {
 		goTogs.gameObject.SetActive (bShow);
 	}
 
-	void showStory(bool bShow){
-		goStory.gameObject.SetActive (bShow);
-		if (bShow == true) {
-			for (int i = 0; i < _sStoryLab.Length; i++) {
-				var str = "s" + _sStoryLab [i];
-				Transform trans = null;
-				Transform trans2 = null;
-				switch (str) {
-				case "sz":
-					trans = goStory.GetChild (1).GetChild (0); 
-					break;
-				case "sh":
-					trans = goStory.GetChild (1).GetChild (1); 
-					trans2 = goStory.GetChild (2).GetChild (1); 
-					break;
-				case "si":
-					trans = goStory.GetChild (1).GetChild (2); 
-					trans2 = goStory.GetChild (3).GetChild (1); 
-					break;
-				case "sc":
-					trans = goStory.GetChild (2).GetChild (0); 
-					break;
-				case "su":
-					trans = goStory.GetChild (2).GetChild (2); 
-					break;
-				case "sl":
-					trans = goStory.GetChild (3).GetChild (0); 
-					break;
-				case "sa":
-					trans = goStory.GetChild (3).GetChild (2); 
-					break;
-				case "sn":
-					trans = goStory.GetChild (3).GetChild (3);
-					break;
-				default:
-					break;
-				}
-				if (trans != null)
-					trans.GetComponent<Text> ().CrossFadeAlpha (0, 0f, true);
-				if (trans2 != null)
-					trans2.GetComponent<Text> ().CrossFadeAlpha (0, 0f, true);
-			}
-		}
-	}
-
-	void showStoryWin(bool bShow){
-		goStoryWin.gameObject.SetActive (bShow);
-	}
-
-	void hideStoryWin(){
-		for (int i = 0; i < 5; i++) {
-			goStoryWin.GetChild (i + 1).gameObject.SetActive (false);
-		}
-		showStoryWin (false);
-	}
-
-	void showStoryLab(string str){
-		Transform trans = null;
-		Transform trans2 = null;
-		switch (str) {
-		case "sz":
-			trans = goStory.GetChild (1).GetChild (0); 
-			break;
-		case "sh":
-			trans = goStory.GetChild (1).GetChild (1); 
-			trans2 = goStory.GetChild (2).GetChild (1); 
-			break;
-		case "si":
-			trans = goStory.GetChild (1).GetChild (2); 
-			trans2 = goStory.GetChild (3).GetChild (1); 
-			break;
-		case "sc":
-			trans = goStory.GetChild (2).GetChild (0); 
-			break;
-		case "su":
-			trans = goStory.GetChild (2).GetChild (2); 
-			break;
-		case "sl":
-			trans = goStory.GetChild (3).GetChild (0); 
-			break;
-		case "sa":
-			trans = goStory.GetChild (3).GetChild (2); 
-			break;
-		case "sn":
-			trans = goStory.GetChild (3).GetChild (3);
-			break;
-		default:
-			break;
-		}
-		trans.GetComponent<Text>().CrossFadeAlpha(1, 1.5f, true);
-		if (trans2 != null)
-			trans2.GetComponent<Text>().CrossFadeAlpha(1, 1.5f, true);
-		while (true) {
-			var idx = _sStoryLab.IndexOf (str [1]);
-			if (idx != -1)
-				_sStoryLab = _sStoryLab.Remove (idx, 1);
-			else
-				break;
-		}
-	}
-
-	void showTips(){
-		var goPTips = transform.Find ("goMainTips");
-		for (int i = 0; i < goPTips.childCount; i++) {
-			var goTips = goPTips.GetChild (i);
-			for (int j = 0; j < goTips.childCount; j++) {
-				var item = goTips.GetChild(j).GetComponent<Text>();
-				item.text = (j + 1).ToString ();
-			}
-		}
-	}
-
 	public void onClickDiffMode(){
 		adMgr.PlaySound ("click");
 		showTogs (!goTogs.gameObject.activeSelf);
-	}
-
-	public void onClickStory(){
-		adMgr.PlaySound ("click");
-		showStory (!goStory.gameObject.activeSelf);
 	}
 
 	public void onClickType(){
@@ -285,11 +153,7 @@ public class Minesweeper : MonoBehaviour {
 	}
 
 	void onDiffChanged(){
-		int iDiff;
-		if (_sStory != "")
-			iDiff = 1;
-		else
-			iDiff = _iDiff;
+		int iDiff = _iDiff;
 		if (iDiff == 1) {
 			_iRow = 9;
 			_iLine = 9;
@@ -399,6 +263,7 @@ public class Minesweeper : MonoBehaviour {
                 if (_bGameOver)
                 {
                     adMgr.PlaySound("win");
+                    showTips("Win");
                     //showResult();
                 }
                 else adMgr.PlaySound("check");
@@ -472,17 +337,8 @@ public class Minesweeper : MonoBehaviour {
 		return str;
 	}
 
-	IEnumerator playTips(){
-		goTips.gameObject.SetActive (true);
-		yield return new WaitForSeconds (2.0f);
-		goTips.gameObject.SetActive (false);
-	}
-
-	void showResultTips(string str){
-//		goTips.gameObject.SetActive (true);
-		goTips.GetChild (1).GetComponent<Text> ().text = str;
-		if (coPlayTips != null)
-			StopCoroutine (coPlayTips);
-		coPlayTips = StartCoroutine (playTips());
+	void showTips(string str){
+        goTips.gameObject.SetActive(true);
+        goTips.GetChild (1).GetComponent<Text> ().text = str;
 	}
 }

@@ -7,10 +7,11 @@ using UnityEngine.UI;
 
 public class D3Minesweeper : MonoBehaviour
 {
-    const int COUNT = 5, TOTAL = COUNT* COUNT* COUNT, MINES = 18, AREA = COUNT*COUNT;
+    const int COUNT = 5, TOTAL = COUNT* COUNT* COUNT, MINES = 15, AREA = COUNT*COUNT;
     int[] _tBtns = new int[TOTAL];
     int[] _tNum = new int[TOTAL];
     bool _bGameOver = false;
+    public Transform goTips;
     public Transform cube;
     public Transform cam;
     public Material[] materials;
@@ -22,6 +23,7 @@ public class D3Minesweeper : MonoBehaviour
     {
         initParas();
         initEvent();
+        initShow();
         initGrids();
         Invoke("onStart", 0.5f);
     }
@@ -60,6 +62,10 @@ public class D3Minesweeper : MonoBehaviour
             cam.localPosition = new Vector3(0, 0, -10);
             cam.localRotation = Quaternion.identity;
         });
+    }
+    void initShow()
+    {
+        transform.Find("top/Mine").GetChild(0).GetComponent<Text>().text = MINES.ToString();
     }
     void initGrids()
     {
@@ -180,6 +186,7 @@ public class D3Minesweeper : MonoBehaviour
     void onStart()
     {
         _bGameOver = false;
+        goTips.gameObject.SetActive(false);
         initMines();
         showBtns();
     }
@@ -202,10 +209,15 @@ public class D3Minesweeper : MonoBehaviour
                 if (_bGameOver)
                 {
                     adMgr.PlaySound("win");
-                    //showResult();
+                    showWin();
                 }
                 else adMgr.PlaySound("check");
             }
         }
+    }
+
+    void showWin()
+    {
+        goTips.gameObject.SetActive(true);
     }
 }

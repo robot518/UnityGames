@@ -21,14 +21,19 @@ public class MTouch : MonoBehaviour, IPointerClickHandler
     public void OnPointerClick(PointerEventData eventData)
     {
         //Debug.Log(eventData);
-        var pos = eventData.position;
-        var iLen = 60;
-        if (pos.x >= 90 && pos.x < 630 && pos.y >= 380 && pos.y < 920)
+        //世界坐标转局部坐标
+        var pos = transform.parent.InverseTransformPoint(eventData.position);
+        //Debug.Log(pos);
+        var iLen = 600/9;
+        int xmin = -300, xmax = 300;
+        int ymin = -300, ymax = 300;
+        if (pos.x >= xmin && pos.x < xmax && pos.y >= ymin && pos.y < ymax)
         {
-            var col = Mathf.Floor((pos.x - 90) / iLen);
-            var row = 8 - Mathf.Floor((pos.y - 380) / iLen);
+            var col = Mathf.Floor((pos.x - xmin) / iLen);
+            var row = 8 - Mathf.Floor((pos.y - ymin) / iLen);
             var idx = (int)(9 * row + col);
             _delt.onClick(idx);
+            //Debug.Log(pos + " " + idx+" "+col+" "+row+" "+iLen);
         }
     }
 
