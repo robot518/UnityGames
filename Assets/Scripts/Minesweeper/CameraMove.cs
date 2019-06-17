@@ -5,7 +5,7 @@ using UnityEngine;
 public class CameraMove : MonoBehaviour
 {
     float angle, newdis = 0, olddis = 0;
-    float rotateSpeed = -20;
+    float rotateSpeed = -5;
     bool bDown = false;
     public Transform target;
 
