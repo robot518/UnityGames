@@ -21,6 +21,6 @@ EditorBuildSettings:
     path: Assets/Scenes/D3Minesweeper.unity
     guid: 0052f0771e758451cbf9dfb5f03bf564
   - enabled: 1
-    path: Assets/Scenes/Hoodle.unity
+    path: Assets/Scenes/Pinball.unity
     guid: 092a15dcc38fb4e4eac27855714f123a
   m_configObjects: {}

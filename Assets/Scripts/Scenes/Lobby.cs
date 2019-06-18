@@ -25,7 +25,7 @@ public class Lobby : MonoBehaviour
     void initEvent()
     {
         var btns = transform.Find("btns");
-        string[] tMenuItem = { "Minesweeper", "2048", "Tetris", "D3Minesweeper", "Hoodle"};
+        string[] tMenuItem = { "Minesweeper", "2048", "Tetris", "D3Minesweeper", "Pinball" };
         for (int i = 0, iL = btns.childCount; i < iL; i++)
         {
             var item = btns.GetChild(i).GetComponent<Button>();

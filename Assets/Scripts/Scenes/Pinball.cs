@@ -5,10 +5,10 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class Hoodle : MonoBehaviour
+public class Pinball : MonoBehaviour
 {
     bool _bGameOver = false;
-    Transform goTips;
+    public Transform goTips;
     AudioMgr adMgr;
     // Start is called before the first frame update
     void Start()
