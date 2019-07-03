@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class Pinball : MonoBehaviour
 {
     bool _bGameOver = false;
-    public Transform goTips;
+    public GameObject goTips;
     AudioMgr adMgr;
     // Start is called before the first frame update
     void Start()
@@ -16,7 +16,6 @@ public class Pinball : MonoBehaviour
         initParas();
         initEvent();
         initShow();
-        Invoke("onStart", 0.5f);
     }
 
     // Update is called once per frame
@@ -35,8 +34,6 @@ public class Pinball : MonoBehaviour
         {
             SceneManager.LoadScene("Lobby");
         });
-        var btnStart = transform.Find("down/start").gameObject.GetComponent<Button>();
-        btnStart.onClick.AddListener(onStart);
     }
     void initShow()
     {
@@ -46,14 +43,9 @@ public class Pinball : MonoBehaviour
     {
         return true;
     }
-    void onStart()
-    {
-        _bGameOver = false;
-        goTips.gameObject.SetActive(false);
-    }
 
     void showWin()
     {
-        goTips.gameObject.SetActive(true);
+        goTips.SetActive(true);
     }
 }
