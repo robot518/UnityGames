@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
-public class Smile2048 : MonoBehaviour {
+public class Robot2048 : MonoBehaviour {
     const int ROW = 4, TOTAL = 16, INTER = 30, MOVE = 160;
     int _cnt = 0;
     const float TIMEDELAY = 0.2f;

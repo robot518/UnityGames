@@ -10,7 +10,7 @@ public class Item : MonoBehaviour {
     float _y, _x, _t, _cost, _sm;
     Text lab;
     Image img;
-    Smile2048 _delt;
+    Robot2048 _delt;
     Item mergeItem;
 
     void Awake(){
@@ -56,7 +56,7 @@ public class Item : MonoBehaviour {
         }
     }
 
-    public void init(Smile2048 delt)
+    public void init(Robot2048 delt)
     {
         _delt = delt;
     }
