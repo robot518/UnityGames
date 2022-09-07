@@ -6,3 +6,7 @@
 
 # 游戏详细介绍
 # [2048](https://zhuanlan.zhihu.com/p/67274109) 
+
+#package manager
+#Standard Assets/
+#UMA/

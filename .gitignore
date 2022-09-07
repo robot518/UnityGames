@@ -10,6 +10,8 @@
 .gradle/
 *.DS_Store
 Assets/AssetStoreTools*
+Assets/Standard Assets/
+Assets/UMA/
 
 # Visual Studio cache directory
 .vs/
