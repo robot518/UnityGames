@@ -486,24 +486,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 506499752}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e18d781c3df3e425fb211c52d2c10044, type: 3}
+  m_Script: {fileID: 11500000, guid: c584a11beb7014061a4b0ae2c3a96868, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   goTips: {fileID: 272981623}
   cube: {fileID: 295319114}
   cam: {fileID: 1923938000}
   materials:
-  - {fileID: 2100000, guid: 7b5744526dae944a6a62a697ac313999, type: 2}
-  - {fileID: 2100000, guid: 9f4f02b66eb55476d97f9b4ed674154d, type: 2}
-  - {fileID: 2100000, guid: 5aaa50a3c453d41638a76c5097616754, type: 2}
-  - {fileID: 2100000, guid: b6b55a8c67e8d4ca49c2b9a52fc3c2c4, type: 2}
-  - {fileID: 2100000, guid: bc7c220e3598944ab8f1a29c9cb34498, type: 2}
-  - {fileID: 2100000, guid: 624b6e9f78ef846aba631479bd8dc5ef, type: 2}
-  - {fileID: 2100000, guid: 0e60b64834db84924adf66507c34a845, type: 2}
-  - {fileID: 2100000, guid: ca4259465f17b46b689656e47b84191e, type: 2}
-  - {fileID: 2100000, guid: 8fb33bd51c69c4bc788757beef478e2d, type: 2}
-  - {fileID: 2100000, guid: c8ceddae5efed413799687d1c85d3b34, type: 2}
-  - {fileID: 2100000, guid: 325480acb8396433db18aea3faa4514a, type: 2}
+  - {fileID: 2100000, guid: 0086c89dd9101492ea33e73cd38576d9, type: 2}
+  - {fileID: 2100000, guid: 1d104700c148f4867b6182f3cdc85c6d, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &642817330
 GameObject:
   m_ObjectHideFlags: 0
@@ -607,7 +604,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: efac9fe96b75e4783b23a10bef16e765, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 603e8fac915cc45c5b9fdea359508bcd, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -928,7 +925,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b4af6d0b678dd438087d88412d86ca78, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9c66a199e28c14787ba30befdd0d90e6, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1073,7 +1070,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: e4251fb46ed1f4605981694f6a167b9e, type: 3}
+  m_Texture: {fileID: 2800000, guid: 2f803ab4ccaad42399fcf036a889e5f4, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -1309,7 +1306,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b4af6d0b678dd438087d88412d86ca78, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9c66a199e28c14787ba30befdd0d90e6, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1369,7 +1366,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: b49234a2ce25f419ea27b2e51e38dba1, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -1551,7 +1548,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1923937997}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17fe248aebb77432d8ce23c557346ba4, type: 3}
+  m_Script: {fileID: 11500000, guid: 9bb9a2ad6c08f4ef2b93e5198f4005a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   sound: {fileID: 1822966080}
@@ -1564,9 +1561,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1923937997}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: f5b7f7c43ed9c4edb89cd799363b8b81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  target: {fileID: 1456701034}
 --- !u!1 &1939224121
 GameObject:
   m_ObjectHideFlags: 0
