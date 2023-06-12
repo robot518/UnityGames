@@ -229,7 +229,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 84e8db55a083e41f98e5053330d51958, type: 2}
+  - {fileID: 2100000, guid: 0086c89dd9101492ea33e73cd38576d9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -493,14 +493,17 @@ MonoBehaviour:
   cube: {fileID: 295319114}
   cam: {fileID: 1923938000}
   materials:
+  - {fileID: 2100000, guid: 393abce6d014848e9b60f4aa44ef2f4b, type: 2}
   - {fileID: 2100000, guid: 0086c89dd9101492ea33e73cd38576d9, type: 2}
   - {fileID: 2100000, guid: 1d104700c148f4867b6182f3cdc85c6d, type: 2}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 9955b6ae633da4a7ca3378961e217742, type: 2}
+  - {fileID: 2100000, guid: 5d683e0b10a6d4a09a87b9c207d2d2e8, type: 2}
+  - {fileID: 2100000, guid: 2d98b41c5be63437bbe3f250fc5cdfdc, type: 2}
+  - {fileID: 2100000, guid: cc97de85d19ec40da85ff9922ca0a462, type: 2}
+  - {fileID: 2100000, guid: f82d28e8cc4b84f9fbd2afd12d22c3a8, type: 2}
+  - {fileID: 2100000, guid: 65c34dae6d4024fa08e2fb973c132356, type: 2}
+  - {fileID: 2100000, guid: 55e3acbb9b8a5425b99fea8c66f52247, type: 2}
+  - {fileID: 2100000, guid: d8dc2747825724a318e65a2a89c58a3c, type: 2}
 --- !u!1 &642817330
 GameObject:
   m_ObjectHideFlags: 0
