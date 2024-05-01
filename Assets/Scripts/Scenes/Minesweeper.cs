@@ -32,16 +32,16 @@ public class Minesweeper : MonoBehaviour {
     public TileBase[] tiles;
     Tilemap _tileMap;
 
-    // Use this for initialization
-    void Start () {
+  // Use this for initialization
+  void Start () {
 		initParas ();
 		initEvent ();
 		initShow ();
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
-		if ( Application.platform == RuntimePlatform.Android &&(Input.GetKeyDown(KeyCode.Escape)))  
+		if ( Application.platform == RuntimePlatform.Android &&(Input.GetKeyDown(KeyCode.Escape)))
 		{
 			Application.Quit ();
 		}

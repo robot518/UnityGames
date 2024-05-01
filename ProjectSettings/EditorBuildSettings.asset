@@ -5,22 +5,13 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/Scenes/Lobby.unity
+    guid: 9b53de51d26e34b81bc96ef53e1569f5
   - enabled: 1
     path: Assets/Scenes/Minesweeper.unity
-    guid: 6803d7decc69e46069f9c07e28916ed4
+    guid: d37a711f0eafe49a0925445d60885a86
+  - enabled: 1
+    path: Assets/Scenes/2048.unity
+    guid: edaeca44665494e9298aa32657814aa9
   m_configObjects: {}
